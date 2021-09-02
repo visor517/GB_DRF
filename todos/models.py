@@ -30,5 +30,5 @@ class ToDo(models.Model):
     description = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-    author = models.OneToOneField(User)
+    author = models.OneToOneField(User, on_delete=models.PROTECT)
     status = models.CharField(choices=STATUSES, default='OPEN', max_length=4)

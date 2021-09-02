@@ -7,4 +7,3 @@ from users.serializers import UserModelSerializer
 class UsersViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
-
