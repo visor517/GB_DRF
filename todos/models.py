@@ -9,11 +9,14 @@ class Project(models.Model):
         ('DONE', 'сделан'),     # все туду закрыты
     )
 
-    title = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
     description = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     authors = models.ManyToManyField(User)
     status = models.CharField(choices=STATUSES, default='OPEN', max_length=4)
+
+    def __str__(self):
+        return self.name
 
 
 class ToDo(models.Model):
@@ -23,9 +26,9 @@ class ToDo(models.Model):
     )
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
     description = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
-    dead_line = models.DateTimeField()
-    doers = models.ManyToManyField(User)
+    update_time = models.DateTimeField(auto_now=True)
+    author = models.OneToOneField(User)
     status = models.CharField(choices=STATUSES, default='OPEN', max_length=4)
