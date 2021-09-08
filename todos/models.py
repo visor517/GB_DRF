@@ -25,7 +25,7 @@ class ToDo(models.Model):
     description = models.TextField()
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
-    author = models.OneToOneField(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
