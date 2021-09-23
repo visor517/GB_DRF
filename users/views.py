@@ -4,25 +4,14 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet, ModelViewSet
 
 from users.models import User
-from users.serializers import UserModelSerializer
+from users.serializers import UserModelSerializer, UserModelSerializerV2
 
 
-class UsersViewSet(ViewSet):
+class UsersViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
-
     queryset = User.objects.all()
 
-    def list(self, request):
-        users = User.objects.all()
-        serializer = UserModelSerializer(users, many=True)
-        return Response(serializer.data)
-
-    def retrieve(self, request, pk=None):
-        user = get_object_or_404(User, pk=pk)
-        serializer = UserModelSerializer(user)
-        return Response(serializer.data)
-
-    def update(self, request, pk=None):
-        user = get_object_or_404(User, pk=pk)
-        serializer = UserModelSerializer(user)
-        return Response(serializer.data)
+    def get_serializer_class(self):
+        if self.request.version == '0.2':
+            return UserModelSerializerV2
+        return UserModelSerializer
